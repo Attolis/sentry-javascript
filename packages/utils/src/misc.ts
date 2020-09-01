@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Event, Integration, Options, StackFrame, WrappedFunction } from '@sentry/types';
+import { Event, Integration, StackFrame, WrappedFunction } from '@sentry/types';
 
 import { dynamicRequire, isNodeEnv } from './node';
 import { snipLine } from './string';
@@ -374,13 +374,4 @@ export function addContextToFrame(lines: string[], frame: StackFrame, linesOfCon
   frame.post_context = lines
     .slice(Math.min(sourceLine + 1, maxLines), sourceLine + 1 + linesOfContext)
     .map((line: string) => snipLine(line, 0));
-}
-
-/**
- * Determines if tracing is currently enabled.
- *
- * Tracing is enabled when at least one of `tracesSampleRate` and `tracesSampler` is defined in the SDK config.
- */
-export function hasTracingEnabled(options: Options): boolean {
-  return !!options.tracesSampleRate || !!options.tracesSampler;
 }
